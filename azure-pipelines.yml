@@ -1,0 +1,21 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: UseJavaVersion@1
+    inputs:
+      versionSpec: '17'
+      architecture: 'x64'
+
+  - script: |
+      chmod +x mvnw
+      ./mvnw clean install
+    displayName: Build and Test
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: 'target'
+      artifactName: 'app'
